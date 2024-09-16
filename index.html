@@ -30,6 +30,15 @@
         td:hover {
             background-color: darkgray;
         }
+
+        .interactive-element {
+          transition: background-color 0.3s ease;
+        }
+        
+        .interactive-element:hover, .interactive-element:focus {
+          background-color: #f0f0f0; /* Subtle change to indicate hover or focus */
+        }
+        
     </style>
 </head>
 <body>
@@ -42,7 +51,7 @@
             for (let i = 0; i < rows; i++) {
                 tableContent += '<tr>';
                 for (let j = 0; j < cols; j++) {
-                    tableContent += '<td></td>';
+                    tableContent += '<td class="interactive-element"></td>';
                 }
                 tableContent += '</tr>';
             }
