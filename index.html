@@ -3,45 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10x10 Grid Layout</title>
+    <title>Image Split into Cells</title>
     <style>
-        html, body {
+        body, html {
             margin: 0;
             padding: 0;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        body {
+        #image-table {
             display: grid;
             grid-template-columns: repeat(auto-fill, 10px);
             grid-template-rows: repeat(auto-fill, 10px);
-            justify-content: center;
-            align-content: center;
+            width: 100vw;
+            height: 100vh;
         }
 
-        span {
+        .cell {
             width: 10px;
             height: 10px;
-            background-color: lightgray;
-            border: 1px solid black;
         }
 
-        span:hover {
-            background-color: darkgray;
+        .cell div {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://loremflickr.com/1024/1024');
+            background-size: 100vw 100vh; /* Ensure the image covers the full viewport */
+            background-repeat: no-repeat;
         }
     </style>
 </head>
 <body>
-    <script>
-        const cols = Math.ceil(window.innerWidth / 10);
-        const rows = Math.ceil(window.innerHeight / 10);
-        let gridContent = '';
 
-        for (let i = 0; i < cols * rows; i++) {
-            gridContent += '<span></span>';
+<div id="image-table">
+    <!-- Cells will be added dynamically by JS -->
+</div>
+
+<script>
+    const imageTable = document.getElementById('image-table');
+    const cols = Math.floor(window.innerWidth / 10);
+    const rows = Math.floor(window.innerHeight / 10);
+
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+
+            const div = document.createElement('div');
+            // Position the image slice correctly for each cell
+            div.style.backgroundPosition = `-${col * 10}px -${row * 10}px`;
+
+            cell.appendChild(div);
+            imageTable.appendChild(cell);
         }
+    }
+</script>
 
-        document.body.innerHTML = gridContent;
-    </script>
 </body>
 </html>
