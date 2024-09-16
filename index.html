@@ -4,66 +4,87 @@
     <meta charset="UTF-8">
     <title>Image Split into Cells</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
         table {
             border-collapse: collapse;
-            margin: 0;
-            padding: 0;
-        }
-        tr {
-            padding: 0;
-            margin: 0;
+            table-layout: fixed;
+            width: 100vw;
+            height: 100vh;
         }
         td {
             width: 10px;
             height: 10px;
             padding: 0;
             margin: 0;
+            position: relative;
         }
-        .cell {
+        td div {
             width: 10px;
             height: 10px;
-            background-image: url('https://loremflickr.com/1024/1024');
-            background-size: 1024px 1024px; /* Adjust to your image dimensions */
-            background-repeat: no-repeat;
+            background-image: url('https://loremflickr.com/1024/1024/nature');
+            background-size: 100vw 100vh;
+        }
+        td:hover {
+            outline: 1px solid #ff0000;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<table id="imageTable" role="grid" cellspacing="0" cellpadding="0">
-    <!-- Cells will be generated dynamically -->
+<table role="grid">
+    <tbody>
+        <!-- Rows and cells will be generated dynamically -->
+    </tbody>
 </table>
 
 <script>
-    const table = document.getElementById('imageTable');
-    const cellSize = 10; // Size of each cell
-    const imageWidth = 800; // Width of your image
-    const imageHeight = 600; // Height of your image
+    // Function to generate the grid
+    function generateGrid() {
+        const cellSize = 10; // Cell size in pixels
+        const cols = Math.floor(window.innerWidth / cellSize);
+        const rows = Math.floor(window.innerHeight / cellSize);
+        const tableBody = document.querySelector('table tbody');
 
-    const cols = imageWidth / cellSize;
-    const rows = imageHeight / cellSize;
+        for (let y = 0; y < rows; y++) {
+            const tr = document.createElement('tr');
+            tr.setAttribute('role', 'row');
 
-    for (let r = 0; r < rows; r++) {
-        const row = document.createElement('tr');
-        row.setAttribute('role', 'row');
+            for (let x = 0; x < cols; x++) {
+                const td = document.createElement('td');
+                td.setAttribute('role', 'gridcell');
+                td.setAttribute('aria-selected', 'false');
+                td.setAttribute('aria-label', `Cell at (${x}, ${y})`);
+                td.setAttribute('id', `cell-${x}-${y}`);
 
-        for (let c = 0; c < cols; c++) {
-            const cell = document.createElement('td');
-            cell.setAttribute('role', 'gridcell');
-            cell.className = 'cell';
+                const div = document.createElement('div');
+                div.style.backgroundPosition = `-${x * cellSize}px -${y * cellSize}px`;
 
-            // Set the background position to display the correct part of the image
-            cell.style.backgroundPosition = `-${c * cellSize}px -${r * cellSize}px`;
+                td.appendChild(div);
 
-            // Add click event to alert "boo!"
-            cell.onclick = function() {
-                alert('x:' + c.toString() + " y: "+ r.toString());
-            };
+                // Add click event to show x and y coordinates
+                td.addEventListener('click', function() {
+                    alert(`Clicked cell at (${x}, ${y})`);
+                });
 
-            row.appendChild(cell);
+                tr.appendChild(td);
+            }
+            tableBody.appendChild(tr);
         }
-        table.appendChild(row);
     }
+
+    // Call the function to generate the grid
+    generateGrid();
+
+    // Optional: Regenerate grid on window resize
+    window.addEventListener('resize', () => {
+        document.querySelector('table tbody').innerHTML = '';
+        generateGrid();
+    });
 </script>
 
 </body>
