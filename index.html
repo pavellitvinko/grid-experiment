@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10x10 Grid Table</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        td {
+            width: 10px;
+            height: 10px;
+            background-color: lightgray;
+            border: 1px solid black;
+        }
+
+        td:hover {
+            background-color: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <script>
+            const rows = Math.ceil(window.innerHeight / 10);
+            const cols = Math.ceil(window.innerWidth / 10);
+            let tableContent = '';
+
+            for (let i = 0; i < rows; i++) {
+                tableContent += '<tr>';
+                for (let j = 0; j < cols; j++) {
+                    tableContent += '<td></td>';
+                }
+                tableContent += '</tr>';
+            }
+
+            document.write(tableContent);
+        </script>
+    </table>
+</body>
+</html>
