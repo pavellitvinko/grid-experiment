@@ -3,73 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10x10 Grid Table</title>
+    <title>10x10 Grid Layout</title>
     <style>
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            display: flex;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 10px);
+            grid-template-rows: repeat(auto-fill, 10px);
             justify-content: center;
-            align-items: center;
+            align-content: center;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        td {
+        span {
             width: 10px;
             height: 10px;
-            background-color: white;
+            background-color: lightgray;
             border: 1px solid black;
         }
 
-        td:hover {
-            background-color: red;
+        span:hover {
+            background-color: darkgray;
         }
-
-        .interactive-element {
-          transition: background-color 0.3s ease;
-        }
-        
-        .interactive-element:hover, .interactive-element:focus {
-          background-color: red; /* Subtle change to indicate hover or focus */
-        }
-        
     </style>
 </head>
 <body>
-    <table>
-        <script>
-            const rows = Math.ceil(window.innerHeight / 10);
-            const cols = Math.ceil(window.innerWidth / 10);
-            let tableContent = '';
+    <script>
+        const cols = Math.ceil(window.innerWidth / 10);
+        const rows = Math.ceil(window.innerHeight / 10);
+        let gridContent = '';
 
-            for (let i = 0; i < rows; i++) {
-                tableContent += '<tr>';
-                for (let j = 0; j < cols; j++) {
-                    tableContent += '<td class="interactive-element"> </td>';
-                }
-                tableContent += '</tr>';
-            }
+        for (let i = 0; i < cols * rows; i++) {
+            gridContent += '<span></span>';
+        }
 
-            document.write(tableContent);
-
-            document.querySelectorAll('.interactive-element').forEach(item => {
-              item.addEventListener('mouseenter', (event) => {
-                // Trigger a subtle animation or visual cue
-                event.target.style.border = '1px solid #ddd';
-              });
-            
-              item.addEventListener('mouseleave', (event) => {
-                // Revert to the original style
-                event.target.style.border = '';
-              });
-            });
-        </script>
-    </table>
+        document.body.innerHTML = gridContent;
+    </script>
 </body>
 </html>
