@@ -23,12 +23,12 @@
         td {
             width: 10px;
             height: 10px;
-            background-color: lightgray;
+            background-color: white;
             border: 1px solid black;
         }
 
         td:hover {
-            background-color: darkgray;
+            background-color: red;
         }
 
         .interactive-element {
@@ -36,7 +36,7 @@
         }
         
         .interactive-element:hover, .interactive-element:focus {
-          background-color: #f0f0f0; /* Subtle change to indicate hover or focus */
+          background-color: red; /* Subtle change to indicate hover or focus */
         }
         
     </style>
@@ -51,12 +51,24 @@
             for (let i = 0; i < rows; i++) {
                 tableContent += '<tr>';
                 for (let j = 0; j < cols; j++) {
-                    tableContent += '<td class="interactive-element">@</td>';
+                    tableContent += '<td class="interactive-element"> </td>';
                 }
                 tableContent += '</tr>';
             }
 
             document.write(tableContent);
+
+            document.querySelectorAll('.interactive-element').forEach(item => {
+              item.addEventListener('mouseenter', (event) => {
+                // Trigger a subtle animation or visual cue
+                event.target.style.border = '1px solid #ddd';
+              });
+            
+              item.addEventListener('mouseleave', (event) => {
+                // Revert to the original style
+                event.target.style.border = '';
+              });
+            });
         </script>
     </table>
 </body>
